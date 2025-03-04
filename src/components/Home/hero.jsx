@@ -14,14 +14,14 @@ export default function Hero() {
             <p className="mt-4 text-xl text-gray-600">
               Streamline HR processes, boost productivity, and create a better workplace with our comprehensive employee management solution.
             </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-4">
+            {/* <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button className="px-6 py-6 h-auto" size="lg">
                 Get Started <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button variant="outline" className="px-6 py-6 h-auto" size="lg">
                 Book a Demo
               </Button>
-            </div>
+            </div> */}
             <div className="mt-8 grid grid-cols-3 gap-4">
               <div className="flex flex-col items-center">
                 <div className="bg-blue-100 p-3 rounded-full">
