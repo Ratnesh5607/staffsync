@@ -66,21 +66,21 @@ export default function Navbar() {
                 {isLogin &&
                   <React.Fragment>
                     <NavigationMenuItem>
-                      <Link href="employee-details" legacyBehavior passHref>
+                      <Link href="/dashboard/employee-details" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                           Employee Details
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                      <Link href="my-learning" legacyBehavior passHref>
+                      <Link href="/dashboard/my-learning" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                           My Learning
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
-                      <Link href="projects" legacyBehavior passHref>
+                      <Link href="/dashboard/projects" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                           Project Details
                         </NavigationMenuLink>
