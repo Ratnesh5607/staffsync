@@ -16,6 +16,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from "react-redux"
 import { updateStore } from "@/store/slice"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 export default function Navbar() {
   const isLogin = useSelector(state => state.isLogin);
@@ -91,6 +92,14 @@ export default function Navbar() {
               </NavigationMenuList>
             </NavigationMenu>
             <Button onClick={userAuth}>{isLogin ? "Logout" : "Login"}</Button>
+               {isLogin && <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button>Ratnesh</Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  </DropdownMenuContent>
+                </DropdownMenu>}
           </div>
 
           {/* Mobile menu button */}

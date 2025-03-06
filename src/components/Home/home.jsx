@@ -8,10 +8,10 @@ import Feature from "./features";
 const HomePage = () => {
     return (
         <>
-        <NavBar/>
+        {/* <NavBar/> */}
         <Hero/>
         <Feature/>
-        <Footer/>
+        {/* <Footer/> */}
         </>
     )
 }
