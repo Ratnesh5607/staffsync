@@ -4,6 +4,7 @@ import StoreProvider from "@/components/storeProvider";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Home/navbar";
 import Footer from "@/components/Home/footer";
+import { ThemeProvider } from "@/components/theamProvider";
 
 
 const geistSans = Geist({
@@ -23,16 +24,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      <StoreProvider>
-        <Navbar/>
-        {children}
-        <Footer/>
-      </StoreProvider>
-      <Toaster richColors  position="top-right"/>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <StoreProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </StoreProvider>
+          <Toaster richColors position="top-right" />
+        </ThemeProvider>
       </body>
     </html>
   );

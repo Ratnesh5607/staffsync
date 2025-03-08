@@ -1,9 +1,9 @@
 "use client"
 
-import Link from "next/link"
-import { Users, Menu, X } from "lucide-react"
-import React, { useState } from "react"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import { Users, Menu, X, Sun, Moon } from "lucide-react";
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,14 +12,35 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
+} from "@/components/ui/navigation-menu";
 import { useRouter } from 'next/navigation';
-import { useDispatch, useSelector } from "react-redux"
-import { updateStore } from "@/store/slice"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuTrigger } from "../ui/dropdown-menu"
+import { useDispatch, useSelector } from "react-redux";
+import { updateStore } from "@/store/slice";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useTheme } from "next-themes";
+
+const authMenu = [
+  {
+    name: "My Learning",
+    url: "/dashboard/my-learning",
+    group: "login"
+  },
+  {
+    name: "Project Details",
+    url: "/dashboard/projects",
+    group: "login"
+  },
+  {
+    name: "Empolyee Details",
+    url: "/dashboard/employee-details",
+    group: "login"
+  },
+]
 
 export default function Navbar() {
   const isLogin = useSelector(state => state.isLogin);
+  const { theme, setTheme } = useTheme();
 
   const dispatch = useDispatch();
   const router = useRouter();
@@ -32,13 +53,13 @@ export default function Navbar() {
     }
   }
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-background shadow-md border-y">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between items-center h-16">
           <div className="flex items-center cursor-pointer">
             <Link href={isLogin ? "/dashboard/employee-details" : "/"} className="flex">
               <Users className="h-8 w-8 text-primary " />
-              <span className="ml-2 text-xl font-bold text-gray-800 ">StaffSync</span>
+              <span className="ml-2 text-xl font-bold  ">StaffSync</span>
             </Link>
           </div>
 
@@ -62,55 +83,57 @@ export default function Navbar() {
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>
-                  </React.Fragment>
-                }
-                {isLogin &&
-                  <React.Fragment>
                     <NavigationMenuItem>
-                      <Link href="/dashboard/employee-details" legacyBehavior passHref>
+                      <Link href="#courses" legacyBehavior passHref>
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                          Employee Details
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                      <Link href="/dashboard/my-learning" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                          My Learning
-                        </NavigationMenuLink>
-                      </Link>
-                    </NavigationMenuItem>
-                    <NavigationMenuItem>
-                      <Link href="/dashboard/projects" legacyBehavior passHref>
-                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                          Project Details
+                          Courses
                         </NavigationMenuLink>
                       </Link>
                     </NavigationMenuItem>
                   </React.Fragment>
                 }
+                {!isLogin && <Button onClick={userAuth}>Login</Button>}
               </NavigationMenuList>
             </NavigationMenu>
-            <Button onClick={userAuth}>{isLogin ? "Logout" : "Login"}</Button>
-               {isLogin && <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button>Ratnesh</Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  </DropdownMenuContent>
-                </DropdownMenu>}
           </div>
 
+          {isLogin && <DropdownMenu>
+            <DropdownMenuTrigger asChild >
+              <Avatar className="cursor-pointer">
+                <AvatarImage src="" alt="@staffSync" />
+                <AvatarFallback>R</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-52">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>Theme
+                <DropdownMenuShortcut>
+                  {theme === "dark" ? <Sun /> : <Moon />}
+                </DropdownMenuShortcut>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              {
+                authMenu.map(menu =>
+                  <Link href={menu.url} key={menu.name}>
+                    <DropdownMenuItem>{menu.name}</DropdownMenuItem>
+                  </Link>
+                )
+              }
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={userAuth} className="cursor-pointer">Logout</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>}
+
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
+          {!isLogin && <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-600 hover:text-primary"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
-          </div>
+          </div>}
         </div>
       </div>
 
@@ -127,7 +150,7 @@ export default function Navbar() {
               </Link>
             </React.Fragment>
             }
-            {isLogin &&
+            {/* {isLogin &&
               <React.Fragment>
                 <Link href="employee-details" className="block px-3 py-2 text-gray-600 hover:text-primary font-medium">
                   Employee Details
@@ -139,8 +162,8 @@ export default function Navbar() {
                   Project Details
                 </Link>
               </React.Fragment>
-            }
-            <Button className="mt-2 w-full" onClick={userAuth}>{isLogin ? "Logout" : "Login"}</Button>
+            } */}
+            {!isLogin && <Button className="mt-2 w-full" onClick={userAuth}>Login</Button>}
           </div>
         </div>
       )}
