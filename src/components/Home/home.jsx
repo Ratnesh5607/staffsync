@@ -4,15 +4,16 @@ import NavBar from "./navbar";
 import Hero from "./hero";
 import Footer from "./footer";
 import Feature from "./features";
+import Courses from "./courses";
+import React from "react";
 
 const HomePage = () => {
     return (
-        <>
-        {/* <NavBar/> */}
+        <React.Fragment>
         <Hero/>
         <Feature/>
-        {/* <Footer/> */}
-        </>
+        <Courses/>
+        </React.Fragment>
     )
 }
 
